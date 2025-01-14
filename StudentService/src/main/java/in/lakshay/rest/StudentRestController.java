@@ -1,7 +1,11 @@
 package in.lakshay.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import in.lakshay.entity.Student;
@@ -36,10 +41,21 @@ public class StudentRestController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Student>> findAllStudents() {
-		List<Student> list = service.findAllStudents();
-		return new ResponseEntity<List<Student>>(list,HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> findAllStudents(
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size) {
+	    Page<Student> studentPage = service.findStudentsWithPagination(page, size);
+
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("students", studentPage.getContent());
+	    response.put("currentPage", studentPage.getNumber());
+	    response.put("totalItems", studentPage.getTotalElements());
+	    response.put("totalPages", studentPage.getTotalPages());
+
+	    return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
+
 	
 	@GetMapping("/find/{id}")
 	public ResponseEntity<?> findOneStudent(@PathVariable Long id) {

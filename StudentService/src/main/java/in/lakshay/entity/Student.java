@@ -32,4 +32,54 @@ public class Student {
 
     @Column(name="saddr")
     private String studentAddr;
+
+	public Long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+	public Integer getStudentAge() {
+		return studentAge;
+	}
+
+	public void setStudentAge(Integer studentAge) {
+		this.studentAge = studentAge;
+	}
+
+	public String getStudentGender() {
+		return studentGender;
+	}
+
+	public void setStudentGender(String studentGender) {
+		this.studentGender = studentGender;
+	}
+
+	public String getStudentDept() {
+		return studentDept;
+	}
+
+	public void setStudentDept(String studentDept) {
+		this.studentDept = studentDept;
+	}
+
+	public String getStudentAddr() {
+		return studentAddr;
+	}
+
+	public void setStudentAddr(String studentAddr) {
+		this.studentAddr = studentAddr;
+	}
+    
+    
 }

@@ -1,8 +1,11 @@
 package in.lakshay.service.impl;
-
-import java.util.List;
+ 
+import java.util.List; 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +25,14 @@ public class StudentServiceImpl implements IStudentService {
 		student = repo.save(student);
 		return student.getStudentId();
 	}
-
+	
 	@Override
-	public List<Student> findAllStudents() {
-		List<Student> list = repo.findAll();
-		return list;
+	public Page<Student> findStudentsWithPagination(int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    return repo.findAll(pageable);
 	}
+
+
 	
 	@Override
 	public Student findOneStudent(Long id) {
@@ -62,4 +67,5 @@ public class StudentServiceImpl implements IStudentService {
 			throw new StudentNotFoundException("Student '"+id+"' Not exist");
 		}
 	}
+
 }
